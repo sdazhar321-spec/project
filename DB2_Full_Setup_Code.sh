@@ -7,7 +7,7 @@
 # ==============================================================================
 
 # --- Configuration & Variables ---
-BASE_HOME_DIR="/mnt/c/Prject/DB2/home" 
+BASE_HOME_DIR="/mnt/c/Project/DB2/home" 
 DB2_HOME="/opt/ibm/db2/V11.5" # Update this to your actual DB2 engine binaries path
 DB2_PORT="50000"
 DB2_DBNAME="TRIDATA"
