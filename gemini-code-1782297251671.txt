@@ -1,0 +1,26 @@
+# 1. Use IBM's certified WebSphere Liberty image with Java 17 for Linux
+FROM icr.io/appcafe/websphere-liberty:kernel-java17-openj9-ubi9
+
+USER root
+
+# 2. Create the target application directory inside the image
+RUN mkdir -p /opt/IBM/TRIRIGA
+
+# 3. Copy your local Windows installation files into the image
+COPY ./tririga_root /opt/IBM/TRIRIGA
+
+# 4. CRITICAL: Sanitize Windows line endings (CRLF to LF) for Linux compatibility
+RUN apt-get update && apt-get install -y dos2unix && \
+    find /opt/IBM/TRIRIGA -type f -name "*.sh" -exec dos2unix {} + && \
+    find /opt/IBM/TRIRIGA -type f -name "*.properties" -exec dos2unix {} + && \
+    apt-get clean
+
+# 5. Provide execution permissions to the runtime binaries
+RUN chmod +x /opt/IBM/TRIRIGA/bin/*.sh
+
+# 6. Expose TRIRIGA ports (8001 for HTTP, 8443 for HTTPS)
+EXPOSE 8001 8443
+
+# 7. Set the execution directory and startup pointer
+WORKDIR /opt/IBM/TRIRIGA
+CMD ["/opt/IBM/TRIRIGA/bin/run_server.sh"]
