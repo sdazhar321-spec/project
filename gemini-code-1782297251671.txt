@@ -1,5 +1,7 @@
 # 1. Use IBM's certified WebSphere Liberty image with Java 17 for Linux
-FROM icr.io/appcafe/websphere-liberty:kernel-java17-openj9-ubi9
+# FROM icr.io/appcafe/websphere-liberty:kernel-java17-openj9-ubi9
+
+FROM ibm-semeru-runtimes:open-17-jdk-jammy
 
 USER root
 
